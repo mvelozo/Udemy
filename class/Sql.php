@@ -13,18 +13,18 @@ class Sql extends PDO {
 	}
 
 	//seta os parametros com chaves e valores para a conexao
-	private function setParams($statment, $parameters = array()){
+	private function setParams($statement, $parameters = array()){
 
 		foreach ($parameters as $key => $value) {
 			
-			$statment->setParams($key,$value);
+			$this->setParam($statement, $key,$value);
 		}
 	}
 
 	//seta um unico parametro (quando necessario) para consulta
-	private function setParam($statment, $key, $value){
+	private function setParam($statement, $key, $value){
 
-		$statment->bindParam($key,$value);
+		$statement->bindParam($key,$value);
 	}
 
 	//seta os parametros que prepara a conexao com retorno das informacoes em array
