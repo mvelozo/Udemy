@@ -151,6 +151,21 @@ class Usuario{
 		//var_dump("entrou no update = <br>".$login."<br>".$senha."<br>");
 	}
 
+	public function delete(){
+
+		$sql = new Sql();
+
+		$sql->query("DELETE FROM tb_usuarios WHERE idusuarios = :ID", array(
+			'ID'=>$this->getIdUsuario()
+		));
+
+		$this->setIdUsuario(0);
+		$this->setDesLogin("");
+		$this->setDesSenha("");
+		$this->setDtCadastro(new DateTime());
+
+	}
+
 	public function __construct($login = "", $senha = ""){
 
 		$this->setDesLogin($login);

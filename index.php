@@ -59,12 +59,17 @@ $user->insert();
 echo $user;
 */
 
+/*
+//Atualiza o usuario
 $user = new Usuario();
-
 $user->carregaID(5);
-
 $user->update("professor", "123654");
-
 echo $user;
+*/
 
+//deleta um usuario
+$user = new Usuario();
+$user->carregaID(5);
+$user->delete();
+echo $user;
  ?>
