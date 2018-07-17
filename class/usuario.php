@@ -57,12 +57,14 @@ class Usuario{
 		if(count($result) > 0){
 
 
+			$this->setDados($result[0]);
+			/*
 			$row = $result[0];
-
 			$this->setIdUsuario($row['idusuarios']);
 			$this->setDesLogin($row['deslogin']);
 			$this->setDesSenha($row['dessenha']);
 			$this->setDtCadastro(new DateTime($row['dtcadastro']));
+			*/
 		}
 	}
 
@@ -95,17 +97,64 @@ class Usuario{
 
 		if(count($result) > 0){
 
-			$row = $result[0];
-
-			$this->setIdUsuario($row['idusuarios']);
+			//$row = $result[0];
+			$this->setDados($result[0]);
+			/*$this->setIdUsuario($row['idusuarios']);
 			$this->setDesLogin($row['deslogin']);
 			$this->setDesSenha($row['dessenha']);
-			$this->setDtCadastro(new DateTime($row['dtcadastro']));
+			$this->setDtCadastro(new DateTime($row['dtcadastro']));*/
 		} else {
 
 			throw new Exception("Login ou senha inválidos", 1);
 			
 		}
+	}
+
+	public function setDados($dados){
+
+		$this->setIdUsuario($dados['idusuarios']);
+		$this->setDesLogin($dados['deslogin']);
+		$this->setDesSenha($dados['dessenha']);
+		$this->setDtCadastro(new DateTime($dados['dtcadastro']));
+
+	}
+
+	public function insert(){
+
+		$sql = new Sql();
+
+		$result = $sql->select("CALL sp_usuarios_insert(:LOGIN, :SENHA)", array(
+
+			':LOGIN'=>$this->getDesLogin(),
+			':SENHA'=>$this->getDesSenha()
+		));
+
+		if(count($result) > 0){
+			$this->setDados($result[0]);
+		}
+	}
+
+
+	public function update($login, $senha){
+
+		$this->setDesLogin($login);
+		$this->setDesSenha($senha);
+
+		$sql = new Sql();
+
+		$sql->query("UPDATE tb_usuarios SET deslogin = :LOGIN, dessenha = :SENHA WHERE idusuarios = :ID", array(
+
+			':LOGIN'=>$this->getDesLogin(),
+			':SENHA'=>$this->getDesSenha(),
+			':ID'=>$this->getIdUsuario()
+		));			
+		//var_dump("entrou no update = <br>".$login."<br>".$senha."<br>");
+	}
+
+	public function __construct($login = "", $senha = ""){
+
+		$this->setDesLogin($login);
+		$this->setDesSenha($senha);
 	}
 
 	//exibe na tela em forma de json o resultado da consulta do bd

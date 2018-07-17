@@ -37,10 +37,34 @@ $lista = Usuario::buscarUsuario("ro");
 echo json_encode($lista);
 */
 
+/*
 //carrega usuario atraves do login e senha 
 $user = new Usuario();
 
-$user->login("Uso","12345");
+$user->login("Urso","12345");
 
 echo $user;
+*/
+
+/*
+//insere usuario e senha  
+$user = new Usuario("Aluno", "@luno");
+
+
+//$user->setDesLogin("Aluno");
+//$user->setDesSenha("@luno");
+
+$user->insert();
+
+echo $user;
+*/
+
+$user = new Usuario();
+
+$user->carregaID(5);
+
+$user->update("professor", "123654");
+
+echo $user;
+
  ?>
